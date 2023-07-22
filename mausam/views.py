@@ -1,6 +1,7 @@
 from django.shortcuts import render,HttpResponse
 import json
 import urllib.request
+import datetime
 # Create your views here.
 
 def index(request):
@@ -21,8 +22,8 @@ def index(request):
                 "wind_speed": json_data['wind']['speed'],
                 "icon_code": json_data['weather'][0]['icon'],
                 "pressure": json_data['main']['pressure'],
-                "sunrise" : json_data['sys']['sunrise'],
-                "sunset": json_data['sys']['sunset'],
+                "sunrise": datetime.datetime.fromtimestamp(json_data['sys']['sunrise']), # convert timestamp to time
+                "sunset": datetime.datetime.fromtimestamp(json_data['sys']['sunset']),
             }
             return render(request, "index.html", {"data": data})
         except Exception as e:

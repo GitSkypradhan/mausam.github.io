@@ -13,17 +13,12 @@
     body{
         background-color: rgb(46, 45, 45);
         color: wheat;
-        margin: auto;
-        padding: auto;
-
-
+        padding: 10px;
     }
     .nav{
         background-color:rgb(31, 4, 4);
         height: 80px;
-        margin: 5px;
-        padding: 5px;
-
+        padding: 10px;
     }
 
   th{
@@ -42,61 +37,58 @@
 <div class="form">
 <form action="" method="POST">
     {% csrf_token %}
-    <fieldset>
+<div>
     <h2> Janiye Aapke Sehar ka Mausam <i class="fa fa-cloud-moon"></i></h2>
     <input type="text" class="form" name="city" placeholder="e.g 'Mumbai','London'" required>  
     <button type="submit"><i class="fa fa-search-location"></i></button>
 
-
-
-</fieldset>
-
+</div>
 {% if data.country_code %}
-<fieldset>
+<div>
  
 
     <h2>{{ data.city | capfirst}} {{data.temperature | add:-273.15}}°C <img src="http://openweathermap.org/img/w/{{ data.icon_code }}.png" alt="Weather Icon"></h2>
     <table>
     <tr>
         <th>Country Code</th> 
-         <td>:{{ data.country_code }} </td>
+         <td>: {{ data.country_code }} </td>
         <th>Sunrise</th>
-        <td>:{{data.sunrise| }}</td>
+        <td>: {{data.sunrise | time:"TIME_FORMAT" }}</td>
     </tr>
     <tr>
         <th>Weather</th>
-        <td>:{{ data.weather_main }} - {{ data.weather_description }}</td>
+        <td>: {{ data.weather_main }} - {{ data.weather_description }}</td>
         <th>Sunset</th> 
-        <td>:{{data.sunset | t}}</td> 
+        <td>: {{data.sunset | time:"TIME_FORMAT"  }}</td> 
     </tr>
     <tr>
         <th>Temperature</th> 
-        <td>:{{ data.temperature }}°K</td>
+        <td>: {{ data.temperature }}°K</td>
     </tr>
     <tr>
         <th>Feels Like</th>
-        <td>:{{ data.feels_like }}°K</td>
+        <td>: {{ data.feels_like }}°K</td>
     </tr>
     <tr>
         <th>Humidity</th> 
-        <td>:{{ data.humidity }}%</td>   
+        <td>: {{ data.humidity }}%</td>   
     </tr>
     <tr>
         <th>Pressure</th>
-        <td>:{{data.pressure}} Pa</td> 
+        <td>: {{data.pressure}} Pa</td> 
     </tr>
     <tr>
         <th>Wind Speed</th>
-        <td>:{{ data.wind_speed }} m/s</td>
+        <td>: {{ data.wind_speed }} m/s</td>
     </tr>
     </table>
     
 
-</fieldset>
+</div>
 {% elif error %}
-<fieldset>
+<div>
     <p>{{error}}</p>
-</fieldset>  
+</div>  
 
 {% endif %}
 </form>
