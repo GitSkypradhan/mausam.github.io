@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mausam Sarthi</title>
+    <link rel="icon" href="http://openweathermap.org/img/w/{{ data.icon_code }}.png" type="img/png" width="50px" height="50px" > 
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+<style>
+    body{
+        background-color: rgb(46, 45, 45);
+        color: wheat;
+        margin: auto;
+        padding: auto;
+
+
+    }
+    .nav{
+        background-color:rgb(31, 4, 4);
+        height: 80px;
+        margin: 5px;
+        padding: 5px;
+
+    }
+
+  th{
+    text-align: left;
+  }
+
+</style>
+
+</head>
+<body>
+    <!-- Jay Siya Ram... -->
+<div class="nav">
+<h1>Mausam Sarthi <i class="fas fa-cloud-sun-rain fa-2xl"></i></h1>
+</div>
+
+<div class="form">
+<form action="" method="POST">
+    {% csrf_token %}
+    <fieldset>
+    <h2> Janiye Aapke Sehar ka Mausam <i class="fa fa-cloud-moon"></i></h2>
+    <input type="text" class="form" name="city" placeholder="e.g 'Mumbai','London'" required>  
+    <button type="submit"><i class="fa fa-search-location"></i></button>
+
+
+
+</fieldset>
+
+{% if data.country_code %}
+<fieldset>
+ 
+
+    <h2>{{ data.city | capfirst}} {{data.temperature | add:-273.15}}°C <img src="http://openweathermap.org/img/w/{{ data.icon_code }}.png" alt="Weather Icon"></h2>
+    <table>
+    <tr>
+        <th>Country Code</th> 
+         <td>:{{ data.country_code }} </td>
+        <th>Sunrise</th>
+        <td>:{{data.sunrise| }}</td>
+    </tr>
+    <tr>
+        <th>Weather</th>
+        <td>:{{ data.weather_main }} - {{ data.weather_description }}</td>
+        <th>Sunset</th> 
+        <td>:{{data.sunset | t}}</td> 
+    </tr>
+    <tr>
+        <th>Temperature</th> 
+        <td>:{{ data.temperature }}°K</td>
+    </tr>
+    <tr>
+        <th>Feels Like</th>
+        <td>:{{ data.feels_like }}°K</td>
+    </tr>
+    <tr>
+        <th>Humidity</th> 
+        <td>:{{ data.humidity }}%</td>   
+    </tr>
+    <tr>
+        <th>Pressure</th>
+        <td>:{{data.pressure}} Pa</td> 
+    </tr>
+    <tr>
+        <th>Wind Speed</th>
+        <td>:{{ data.wind_speed }} m/s</td>
+    </tr>
+    </table>
+    
+
+</fieldset>
+{% elif error %}
+<fieldset>
+    <p>{{error}}</p>
+</fieldset>  
+
+{% endif %}
+</form>
+</div>
+
+</body>
+</html>
+
