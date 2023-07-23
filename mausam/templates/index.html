@@ -52,18 +52,20 @@
     <tr>
         <th>Country Code</th> 
          <td>: {{ data.country_code }} </td>
-        <th>Sunrise</th>
-        <td>: {{data.sunrise | time:"TIME_FORMAT" }}</td>
+        <th>Co-ordinates</th>
+        <td>: [ {{data.coord.lon}} lon /{{data.coord.lat}} lat ]</td>
     </tr>
     <tr>
         <th>Weather</th>
         <td>: {{ data.weather_main }} - {{ data.weather_description }}</td>
-        <th>Sunset</th> 
-        <td>: {{data.sunset | time:"TIME_FORMAT"  }}</td> 
+        <th>Sunrise</th>
+        <td>: {{data.sunrise | time:"TIME_FORMAT" }}</td>
     </tr>
     <tr>
         <th>Temperature</th> 
         <td>: {{ data.temperature }}°K</td>
+        <th>Sunset</th>
+        <td>: {{data.sunset | time:"TIME_FORMAT"  }}</td>
     </tr>
     <tr>
         <th>Feels Like</th>

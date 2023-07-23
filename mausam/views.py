@@ -24,6 +24,7 @@ def index(request):
                 "pressure": json_data['main']['pressure'],
                 "sunrise": datetime.datetime.fromtimestamp(json_data['sys']['sunrise']), # convert timestamp to time
                 "sunset": datetime.datetime.fromtimestamp(json_data['sys']['sunset']),
+                "coord":json_data['coord'],
             }
             return render(request, "index.html", {"data": data})
         except Exception as e:
