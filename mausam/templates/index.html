@@ -15,16 +15,14 @@
         background-image: url("{% static '/images/whiteBg.jpg' %}");
         background-size: cover;
         background-repeat: no-repeat; 
-        color: wheat;
-
-        font-family: Arial, Helvetica, sans-serif;
-        padding: 5px;
-        margin: 5px;
+        padding: 0;
+        margin: 0;
     }
     .nav{
-        
         height: 80px;
-
+        padding: 10px;
+        text-shadow: 0 0 5px rgba(255, 239, 190, 0.5), 0 0 10px rgba(255, 239, 190, 0.3), 0 0 15px rgba(255, 239, 190, 0.2); /* Sunshine glow effect */
+        color:#fcfdfd;
     }
 
   th{
@@ -33,11 +31,24 @@
   #myInput{
     padding: 10px;
     border-radius: 20px;
+    width: 400px;
+    font-size: medium;
 
   }
-  input{
-    
+  button{
+    padding: 10px;
   }
+  .form{
+        backdrop-filter: blur(2px); /* Adjust the blur intensity as needed */
+        background-color: rgba(173, 216, 230, 0.5); /* Sky blue color with some transparency */
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        display: inline-block;
+        color:#353433;
+
+  }
+
 
 </style>
 
@@ -52,17 +63,14 @@
 <form action="" method="POST">
     {% csrf_token %}
 <div>
-    <h2> Janiye Aapke Sehar ka Mausam <i class="fa fa-cloud-moon"></i></h2>
+    <h2> Janiye Aapke Sehar ka Mausam <i class="fa fa-cloud-moon fa-2xl"></i></h2>
     <input type="text" id="myInput" name="city" placeholder="e.g 'Mumbai','London'" required> 
     <button type="submit"><i class="fa fa-search"></i></button>
-    
-    
+
 
 </div>
 {% if data.country_code %}
 <div>
-    <i
-
     <h2>{{ data.city | capfirst}} {{data.temperature | add:-273.15}}°C <img src="http://openweathermap.org/img/w/{{ data.icon_code }}.png" alt="Weather Icon"></h2>
     <table>
     <tr>
