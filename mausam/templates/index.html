@@ -14,15 +14,17 @@
     body{
         background-image: url("{% static '/images/whiteBg.jpg' %}");
         background-size: cover;
-        background-repeat: no-repeat;
-         
+        background-repeat: no-repeat; 
         color: wheat;
-        padding: 10px;
+
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 5px;
+        margin: 5px;
     }
     .nav{
-        background-color:rgb(31, 4, 4);
+        
         height: 80px;
-        padding: 10px;
+
     }
 
   th{
@@ -31,8 +33,7 @@
   #myInput{
     padding: 10px;
     border-radius: 20px;
-    background-color: white;
-    display: inline-block;
+
   }
   input{
     
@@ -52,10 +53,9 @@
     {% csrf_token %}
 <div>
     <h2> Janiye Aapke Sehar ka Mausam <i class="fa fa-cloud-moon"></i></h2>
-    <div id="myInput">
+    <input type="text" id="myInput" name="city" placeholder="e.g 'Mumbai','London'" required> 
     <button type="submit"><i class="fa fa-search"></i></button>
-    <input type="text" id="myInput" name="city" placeholder="e.g 'Mumbai','London'" required>  
-    </div>
+    
     
 
 </div>
