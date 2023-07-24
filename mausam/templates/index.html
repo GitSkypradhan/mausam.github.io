@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,10 @@
     
 <style>
     body{
-        background-color: rgb(46, 45, 45);
+        background-image: url("{% static '/images/whiteBg.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+         
         color: wheat;
         padding: 10px;
     }
@@ -23,6 +27,15 @@
 
   th{
     text-align: left;
+  }
+  #myInput{
+    padding: 10px;
+    border-radius: 20px;
+    background-color: white;
+    display: inline-block;
+  }
+  input{
+    
   }
 
 </style>
@@ -39,13 +52,16 @@
     {% csrf_token %}
 <div>
     <h2> Janiye Aapke Sehar ka Mausam <i class="fa fa-cloud-moon"></i></h2>
-    <input type="text" class="form" name="city" placeholder="e.g 'Mumbai','London'" required>  
-    <button type="submit"><i class="fa fa-search-location"></i></button>
+    <div id="myInput">
+    <button type="submit"><i class="fa fa-search"></i></button>
+    <input type="text" id="myInput" name="city" placeholder="e.g 'Mumbai','London'" required>  
+    </div>
+    
 
 </div>
 {% if data.country_code %}
 <div>
- 
+    <i
 
     <h2>{{ data.city | capfirst}} {{data.temperature | add:-273.15}}°C <img src="http://openweathermap.org/img/w/{{ data.icon_code }}.png" alt="Weather Icon"></h2>
     <table>
