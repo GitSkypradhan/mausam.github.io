@@ -9,133 +9,173 @@
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap">
 
 
 
 <style>
     body{
-        background-image: url("{% static '/images/whiteBg.jpg' %}");
-        background-size: cover;
-        background-repeat: no-repeat; 
-        padding: 0;
         margin: 0;
-        font-size: 14px;
-    
+        padding: 0;
+        display: flex;
+        justify-content:center ;
+        background-color: rgb(252, 235, 203);
+        height: 100vh;
     
     }
 
+
     .nav{
-        height: 80px;
+        width:100vw;
+        height: 10vh;
+        background-color: rgb(179, 214, 243);
+        margin-bottom: 20px;
         padding: 10px;
-        text-shadow: 0 0 5px rgba(255, 239, 190, 0.5), 0 0 10px rgba(255, 239, 190, 0.3), 0 0 15px rgba(255, 239, 190, 0.2); /* Sunshine glow effect */
-        color:#fcfdfd;
-        
-    }
+        color: black;
+        display: block;
+        text-align: center;
+        box-shadow: 5px 2px rgba(199, 170, 247, 0.966);
+ }
 
   th{
     text-align: left;
   }
-  #myInput{
-    padding: 10px;
-    border-radius: 20px;
-    width: 350px;
-    font-size: 12px;
-  }
-  button{
-    padding: 10px;
-  }
-  .form{
-        backdrop-filter: blur(2px); /* Adjust the blur intensity as needed */
-        background-color: rgba(173, 216, 230, 0.5); /* Sky blue color with some transparency */
-        padding: 10px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-        display: inline-block;
-        color:#353433;
-
-  }
-  @media screen and (max-width: 480px) {
-    body{
-        background-image: 100%;
-        font-size: px;
-        margin: auto;
-        padding: auto;
-    }
   
+
+  .searchform{
+        backdrop-filter: blur(2px); /* Adjust the blur intensity as needed */
+        background-position: center;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+  }
+  .search-bar{
+        width: 100%;
+        max-width: 700px;
+        background: rgba(94, 92, 90, 0.288);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 60px;
+        padding: 10px 20px;
+
+  }
+  .search-bar input{
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 10px 10px;
+    font-size: 15px;
+    
   }
 
+.search-bar ::placeholder{
+
+    letter-spacing: 2.5px;
+    font-family: monospace;
+    color: rgb(39, 38, 43);
+    border-right: 2px solid;
+    white-space: nowrap;
+    display: inline-block;
+    overflow: hidden;
+    animation: typewriter 3s steps(18) infinite alternate;
+}
+@keyframes typewriter{
+    from{
+        width: 0;
+    }
+    to{
+        width: 100%;
+    }
+
+}
+
+.search-bar button{
+    width: 20px;
+    border: 0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background: transparent;
+}
 
 </style>
 
 </head>
 <body>
     <!-- Jay Siya Ram... -->
-<div class="nav">
-<h1>Mausam Sarthi <i class="fas fa-cloud-sun-rain fa-2xl"></i></h1>
+<div class="container">
+    <div class="nav">
+        <h1>Mausam Sarthi</h1>
+    </div>
+
+    <div class="searchform">
+        <form action="" class="search-bar" method="POST">
+        {% csrf_token %}
+            <button type="submit"><i class="fa fa-search"></i></button>
+            <input type="text"  name="city" placeholder="janiye aapke sehar ka mausam?" required> 
+        </form>
+    </div>
+
+
+
+
+        {% if data.country_code %}
+        <div>
+            <h2>{{ data.city | capfirst}} {{data.temperature | add:-273.15}}°C <img src="http://openweathermap.org/img/w/{{ data.icon_code }}.png" alt="Weather Icon"></h2>
+            <table>
+                <tr>
+                    <th>Country Code</th> 
+                    <td>: {{ data.country_code }} </td>
+                    <th>Co-ordinates</th>
+                    <td>: [ {{data.coord.lon}} lon /{{data.coord.lat}} lat ]</td>
+                </tr>
+                <tr>
+                    <th>Weather</th>
+                    <td>: {{ data.weather_main }} - {{ data.weather_description }}</td>
+                    <th>Sunrise</th>
+                    <td>: {{data.sunrise | time:"TIME_FORMAT" }}</td>
+                </tr>   
+                <tr>
+                    <th>Temperature</th> 
+                    <td>: {{ data.temperature }}°K</td>
+                    <th>Sunset</th>
+                    <td>: {{data.sunset | time:"TIME_FORMAT"  }}</td>
+                </tr>
+                <tr>
+                    <th>Feels Like</th>
+                    <td>: {{ data.feels_like }}°K</td>
+                </tr>
+                <tr>
+                    <th>Humidity</th> 
+                    <td>: {{ data.humidity }}%</td>   
+                </tr>
+                <tr>
+                    <th>Pressure</th>
+                    <td>: {{data.pressure}} Pa</td> 
+                </tr>
+                <tr>
+                    <th>Wind Speed</th>
+                    <td>: {{ data.wind_speed }} m/s</td>
+                </tr>
+            </table>
+        </div>
+        
+        {% elif error %}
+            <div>
+                <p>{{error}}</p>
+            </div>  
+        {% endif %} 
+
 </div>
 
-<div class="form">
-<form action="" method="POST">
-    {% csrf_token %}
-<div>
-    <h2> Janiye Aapke Sehar ka Mausam <i class="fa fa-cloud-moon fa-2xl"></i></h2>
-    <input type="text" id="myInput" name="city" placeholder="e.g 'Mumbai','London'" required> 
-    <button type="submit"><i class="fa fa-search"></i></button>
+
 
 
 </div>
-{% if data.country_code %}
-<div>
-    <h2>{{ data.city | capfirst}} {{data.temperature | add:-273.15}}°C <img src="http://openweathermap.org/img/w/{{ data.icon_code }}.png" alt="Weather Icon"></h2>
-    <table>
-    <tr>
-        <th>Country Code</th> 
-         <td>: {{ data.country_code }} </td>
-        <th>Co-ordinates</th>
-        <td>: [ {{data.coord.lon}} lon /{{data.coord.lat}} lat ]</td>
-    </tr>
-    <tr>
-        <th>Weather</th>
-        <td>: {{ data.weather_main }} - {{ data.weather_description }}</td>
-        <th>Sunrise</th>
-        <td>: {{data.sunrise | time:"TIME_FORMAT" }}</td>
-    </tr>
-    <tr>
-        <th>Temperature</th> 
-        <td>: {{ data.temperature }}°K</td>
-        <th>Sunset</th>
-        <td>: {{data.sunset | time:"TIME_FORMAT"  }}</td>
-    </tr>
-    <tr>
-        <th>Feels Like</th>
-        <td>: {{ data.feels_like }}°K</td>
-    </tr>
-    <tr>
-        <th>Humidity</th> 
-        <td>: {{ data.humidity }}%</td>   
-    </tr>
-    <tr>
-        <th>Pressure</th>
-        <td>: {{data.pressure}} Pa</td> 
-    </tr>
-    <tr>
-        <th>Wind Speed</th>
-        <td>: {{ data.wind_speed }} m/s</td>
-    </tr>
-    </table>
-    
-
-</div>
-{% elif error %}
-<div>
-    <p>{{error}}</p>
-</div>  
-
-{% endif %}
-</form>
-</div>
-
 </body>
 </html>
 
