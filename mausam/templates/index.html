@@ -9,7 +9,8 @@
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700&display=swap">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
 
@@ -44,11 +45,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 20px;
   }
   .search-bar{
         width: 100%;
         max-width: 700px;
-
         min-width: 300px;
         background: rgba(94, 92, 90, 0.288);
         display: flex;
@@ -72,15 +73,10 @@
 .search-bar ::placeholder{
 
     letter-spacing: 2.5px;
-    font-family: monospace;
+    font-family: 'Roboto' ,serif;
     color: rgb(39, 38, 43);
     font-size: 20px;
-    
-    
 }
-
-
-
 
 .search-bar button{
     width: 20px;
@@ -93,12 +89,49 @@
 }
 
 .weather_data{
-    display:flex;
+
+    height: 50%;
+    padding: 10px;
+
+}
+
+.icon_data{
+    border: 2px solid;
+    text-align: center;
+
+}
+.icon_data img{
+    
+}
+.icon_data span{
+    color: red;
+    font-family: 'Roboto', serif;
+    font-weight: lighter;
+    font-size: 38px;
+    letter-spacing: 1.5px;
+}
+.weather_data{
+    display: grid;
+    grid-template-columns: auto auto;
     justify-content: center;
-    background-color: rgba(138, 238, 238, 0.493) ;
+    gap:40px;   
+}
+.weather_data div{
+    border: 2px solid black;
+    font-size: 20px;
+    font-family: 'Roboto',serif,sans-serif;
+    background-color: rgba(138, 238, 238, 0.493);
+    height: 200px;
+    width: 250px;
+    border-radius: 50px;
+    text-align: center;
+    padding: 20px;
+
 }
 
 </style>
+
+
 
 </head>
 <body>
@@ -118,47 +151,42 @@
 
 
 
-    <div class="weather_data">
+    
         {% if data.country_code %}
-        <div>
-            <h2>{{ data.city | capfirst}} {{data.temperature | add:-273.15}}°C <img src="http://openweathermap.org/img/w/{{ data.icon_code }}.png" alt="Weather Icon"></h2>
-            <table>
-                <tr>
-                    <th>Country Code</th> 
-                    <td>: {{ data.country_code }} </td>
-                    <th>Co-ordinates</th>
-                    <td>: [ {{data.coord.lon}} lon /{{data.coord.lat}} lat ]</td>
-                </tr>
-                <tr>
-                    <th>Weather</th>
-                    <td>: {{ data.weather_main }} - {{ data.weather_description }}</td>
-                    <th>Sunrise</th>
-                    <td>: {{data.sunrise | time:"TIME_FORMAT" }}</td>
-                </tr>   
-                <tr>
-                    <th>Temperature</th> 
-                    <td>: {{ data.temperature }}°K</td>
-                    <th>Sunset</th>
-                    <td>: {{data.sunset | time:"TIME_FORMAT"  }}</td>
-                </tr>
-                <tr>
-                    <th>Feels Like</th>
-                    <td>: {{ data.feels_like }}°K</td>
-                </tr>
-                <tr>
-                    <th>Humidity</th> 
-                    <td>: {{ data.humidity }}%</td>   
-                </tr>
-                <tr>
-                    <th>Pressure</th>
-                    <td>: {{data.pressure}} Pa</td> 
-                </tr>
-                <tr>
-                    <th>Wind Speed</th>
-                    <td>: {{ data.wind_speed }} m/s</td>
-                </tr>
-            </table>
-        </div>
+        <div class="icon_data">
+            <img src="http://openweathermap.org/img/w/{{ data.icon_code }}.png" alt="Weather Icon" width="10%" height="15%">
+            <span>{{data.city | capfirst}}</span>        
+            <span>{{data.temperature | add:-273.15}}°C</span> 
+            Weather{{ data.weather_main }} - {{ data.weather_description }}
+        </div> 
+
+            <div class="weather_data">
+                <div>
+                Country Code
+                {{ data.country_code }} 
+                </div>
+                <div>Co-ordinates: [ {{data.coord.lon}} lon /{{data.coord.lat}} lat ]</div>
+                <div>
+                    <i class="fa-solid fa-temperature-low"></i> {{ data.temperature }}°K
+                </div>
+                <div>
+                Sunrise
+                {{data.sunrise | time:"TIME_FORMAT" }}
+                Sunset: {{data.sunset | time:"TIME_FORMAT"  }}
+                </div>
+                <div>
+                Feels Like: {{ data.feels_like }}°K
+                </div>
+                <div>
+                Humidity: {{ data.humidity }}%
+                </div> 
+                <div> 
+                Pressure: {{data.pressure}} Pa
+                </div>
+                <div>
+                    <i class="fa-solid fa-wind"></i> {{ data.wind_speed }} m/s
+            </div>
+            </div>
         
         {% elif error %}
             <div>
